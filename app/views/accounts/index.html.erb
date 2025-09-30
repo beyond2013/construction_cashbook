@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Accounts" %>
+
+<h1>Accounts</h1>
+
+<div id="accounts">
+  <% @accounts.each do |account| %>
+    <%= render account %>
+    <p>
+      <%= link_to "Show this account", account %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New account", new_account_path %>
