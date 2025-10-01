@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_30_090018) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_01_073839) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,4 +24,43 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_30_090018) do
     t.datetime "updated_at", null: false
     t.index ["active"], name: "index_accounts_on_active"
   end
+
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.text "address"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_clients_on_account_id"
+  end
+
+  create_table "contractors", force: :cascade do |t|
+    t.string "name"
+    t.string "contractor_type"
+    t.string "specialization"
+    t.string "phone"
+    t.string "email"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_contractors_on_account_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.bigint "client_id", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_projects_on_client_id"
+  end
+
+  add_foreign_key "clients", "accounts"
+  add_foreign_key "contractors", "accounts"
+  add_foreign_key "projects", "clients"
 end

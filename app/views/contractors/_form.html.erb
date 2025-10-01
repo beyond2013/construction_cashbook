@@ -1,0 +1,52 @@
+<%= form_with(model: contractor) do |form| %>
+  <% if contractor.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(contractor.errors.count, "error") %> prohibited this contractor from being saved:</h2>
+
+      <ul>
+        <% contractor.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+<div class="field">
+  <%= form.label :contractor_type %>
+  <%= form.select :contractor_type, 
+        options_for_select(["Petty Contractor", "Main Contractor", "Sub Contractor"], @contractor.contractor_type), 
+        {}, 
+        { class: "form-control" } %>
+</div>
+
+
+  <div>
+    <%= form.label :specialization, style: "display: block" %>
+    <%= form.text_field :specialization,  placeholder: "e.g. Civil, Plumbing, Electrical"%>
+  </div>
+
+  <div>
+    <%= form.label :phone, style: "display: block" %>
+    <%= form.text_field :phone %>
+  </div>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+<div class="field">
+  <%= form.label :account_id, "Account" %>
+  <%= form.collection_select :account_id, Account.all, :id, :name, { prompt: "Select Account" }, class: "form-control" %>
+</div>
+
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
