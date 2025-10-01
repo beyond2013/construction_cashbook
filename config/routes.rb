@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :contracts
   root "home#index"
   resources :contractors
   resources :projects
