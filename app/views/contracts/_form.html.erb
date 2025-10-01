@@ -13,12 +13,13 @@
 
   <div>
     <%= form.label :project_id, style: "display: block" %>
-    <%= form.text_field :project_id %>
+   <%= form.collection_select :project_id, Project.all, :id, :name, prompt: "Select a Project" %>
   </div>
 
   <div>
     <%= form.label :contractor_id, style: "display: block" %>
-    <%= form.text_field :contractor_id %>
+    <%= form.collection_select :contractor_id, Contract.all, :id, :name, prompt: "Select a Contractor" %>
+
   </div>
 
   <div>
