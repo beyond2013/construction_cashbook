@@ -1,0 +1,11 @@
+<% content_for :title, "New voucher" %>
+
+<h1>New voucher</h1>
+
+<%= render "form", voucher: @voucher %>
+
+<br>
+
+<div>
+  <%= link_to "Back to vouchers", vouchers_path %>
+</div>

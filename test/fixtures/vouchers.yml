@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2025-10-02
+  voucher_number: MyString
+  voucher_type: MyString
+  description: MyText
+  project: one
+
+two:
+  date: 2025-10-02
+  voucher_number: MyString
+  voucher_type: MyString
+  description: MyText
+  project: two

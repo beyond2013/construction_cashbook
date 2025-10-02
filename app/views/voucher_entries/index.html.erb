@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Voucher entries" %>
+
+<h1>Voucher entries</h1>
+
+<div id="voucher_entries">
+  <% @voucher_entries.each do |voucher_entry| %>
+    <%= render voucher_entry %>
+    <p>
+      <%= link_to "Show this voucher entry", voucher_entry %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New voucher entry", new_voucher_entry_path %>

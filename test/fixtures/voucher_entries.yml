@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  voucher: one
+  account: one
+  debit: 9.99
+  credit: 9.99
+  narration: MyString
+
+two:
+  voucher: two
+  account: two
+  debit: 9.99
+  credit: 9.99
+  narration: MyString

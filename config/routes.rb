@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+    resources :vouchers do
+       resources :voucher_entries, only: [:index, :new, :create, :destroy]
+    end    
   resources :contracts
   root "home#index"
   resources :contractors

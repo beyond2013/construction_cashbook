@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_01_082859) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_073144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -73,9 +73,35 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_082859) do
     t.index ["client_id"], name: "index_projects_on_client_id"
   end
 
+  create_table "voucher_entries", force: :cascade do |t|
+    t.bigint "voucher_id", null: false
+    t.bigint "account_id", null: false
+    t.decimal "debit"
+    t.decimal "credit"
+    t.string "narration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_voucher_entries_on_account_id"
+    t.index ["voucher_id"], name: "index_voucher_entries_on_voucher_id"
+  end
+
+  create_table "vouchers", force: :cascade do |t|
+    t.date "date"
+    t.string "voucher_number"
+    t.string "voucher_type"
+    t.text "description"
+    t.bigint "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_vouchers_on_project_id"
+  end
+
   add_foreign_key "clients", "accounts"
   add_foreign_key "contractors", "accounts"
   add_foreign_key "contracts", "contractors"
   add_foreign_key "contracts", "projects"
   add_foreign_key "projects", "clients"
+  add_foreign_key "voucher_entries", "accounts"
+  add_foreign_key "voucher_entries", "vouchers"
+  add_foreign_key "vouchers", "projects"
 end
