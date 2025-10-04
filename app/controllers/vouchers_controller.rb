@@ -68,6 +68,6 @@ class VouchersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def voucher_params
       params.expect(voucher: [ :date, :voucher_number, :voucher_type, :description, :project_id,
-      voucher_details_attributes: [ :id, account_id, :debit, :credit, :_destroy] ])
+      voucher_details_attributes: [ :id, account_id, :narration, :entry_type, :amount, :_destroy] ])
     end
 end

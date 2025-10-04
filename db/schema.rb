@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_02_073144) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_04_050321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,11 +76,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_073144) do
   create_table "voucher_entries", force: :cascade do |t|
     t.bigint "voucher_id", null: false
     t.bigint "account_id", null: false
-    t.decimal "debit"
-    t.decimal "credit"
     t.string "narration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "entry_type"
+    t.decimal "amount", precision: 15, scale: 2
     t.index ["account_id"], name: "index_voucher_entries_on_account_id"
     t.index ["voucher_id"], name: "index_voucher_entries_on_voucher_id"
   end

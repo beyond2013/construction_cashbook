@@ -23,7 +23,7 @@
 
   <div>
     <%= form.label :voucher_type, style: "display: block" %>
-    <%= form.text_field :voucher_type %>
+    <%= form.text_field :voucher_type, placeholder: "Payment, Receipt, Journal, etc." %>
   </div>
 
   <div>
@@ -33,7 +33,7 @@
 
   <div>
     <%= form.label :project_id, style: "display: block" %>
-    <%= form.text_field :project_id %>
+    <%= form.select :project_id, Project.all.collect { |p| [p.name, p.id] }, prompt: "Select Project" %>
   </div>
  <!-- Nested Voucher Entries -->
   <h3>Voucher Entries</h3>
