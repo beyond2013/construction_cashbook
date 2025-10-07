@@ -1,0 +1,17 @@
+<div class="nested-fields" data-new-record="<%= f.object.new_record? %>">
+  <%= f.hidden_field :id %>              <!-- ensures existing record id is submitted -->
+  <%= f.hidden_field :_destroy, value: false %>  <!-- Rails looks for this to mark deletion -->
+
+  <%= f.collection_select :account_id, Account.all, :id, :name, prompt: "Select account" %>
+
+  <%= f.select :entry_type, [["Debit", "debit"], ["Credit", "credit"]], prompt: "Select type" %>
+
+  <%= f.number_field :amount, step: 0.01, placeholder: "e.g. 5000.00" %>
+
+  <%= f.text_field :narration, placeholder: "description of what this entry is about" %>
+
+  <%= link_to "Remove", "#",
+        class: "remove-entry btn btn-sm btn-danger",
+        data: { action: "click->voucher-entries#remove" } %>
+</div>
+

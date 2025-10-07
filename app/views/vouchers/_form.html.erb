@@ -36,39 +36,46 @@
     <%= form.select :project_id, Project.all.collect { |p| [p.name, p.id] }, prompt: "Select Project" %>
   </div>
  <!-- Nested Voucher Entries -->
-  <h3>Voucher Entries</h3>
-
-  <%= form.fields_for :voucher_entries do |entry_form| %>
-    <div class="nested-fields">
-      <div class="field">
-        <%= entry_form.label :account_id, "Account" %>
-        <%= entry_form.collection_select :account_id, Account.all, :id, :name, prompt: "Select Account" %>
-      </div>
-
-      <div class="field">
-        <%= entry_form.label :entry_type, "Entry Type" %>
-        <%= entry_form.select :entry_type, options_for_select([["Debit", "debit"], ["Credit", "credit"]]), prompt: "Select Type" %>
-      </div>
-
-      <div class="field">
-        <%= entry_form.label :amount %>
-        <%= entry_form.number_field :amount, step: 0.01, placeholder: "e.g. 5000.00" %>
-      </div>
-
-      <div class="field">
-        <%= entry_form.label :narration %>
-        <%= entry_form.text_field :narration, placeholder: "Details about this entry" %>
-      </div>
-
-      <%= link_to "Remove Entry", '#', class: "remove_fields" %>
-      <hr>
-    </div>
-  <% end %>
-
-  <%= link_to "Add Entry", '#', class: "add_fields", data: {association: "voucher_entries"} %>
-
+<%= form_with(model: voucher) do |f| %>
+  <!-- voucher fields -->
+  <div>
+    <%= f.label :date %>
+    <%= f.date_field :date %>
+  </div>
 
   <div>
-    <%= form.submit %>
+    <%= f.label :voucher_number %>
+    <%= f.text_field :voucher_number %>
   </div>
+
+  <div>
+    <%= f.label :voucher_type %>
+    <%= f.text_field :voucher_type %>
+  </div>
+
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <h3>Voucher Entries</h3>
+  <div data-controller="voucher-entries" data-voucher-entries-target="entries">
+  <div data-voucher-entries-target="entries">
+    <%= f.fields_for :voucher_entries do |ve| %>
+      <%= render "voucher_entry_fields", f: ve %>
+    <% end %>
+  </div>
+</div>
+  <!-- hidden template for JS cloning -->
+  <template data-voucher-entries-target="template">
+    <%= f.fields_for :voucher_entries, VoucherEntry.new, child_index: "NEW_RECORD" do |ve| %>
+      <%= render "voucher_entry_fields", f: ve %>
+    <% end %>
+  </template>
+
+  <%= link_to "Add Entry", "#", class: "add-entry", data: { action: "click->voucher-entries#add" } %>
+
+  <%= f.submit %>
+<% end %>
+
 <% end %>
