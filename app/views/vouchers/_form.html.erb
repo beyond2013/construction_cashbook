@@ -1,4 +1,4 @@
-<%= form_with(model: voucher) do |form| %>
+<%= form_with(model: voucher) do |f| %>
   <% if voucher.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(voucher.errors.count, "error") %> prohibited this voucher from being saved:</h2>
@@ -12,70 +12,53 @@
   <% end %>
 
   <div>
-    <%= form.label :date, style: "display: block" %>
-    <%= form.date_field :date %>
-  </div>
-
-  <div>
-    <%= form.label :voucher_number, style: "display: block" %>
-    <%= form.text_field :voucher_number %>
-  </div>
-
-  <div>
-    <%= form.label :voucher_type, style: "display: block" %>
-    <%= form.text_field :voucher_type, placeholder: "Payment, Receipt, Journal, etc." %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
-  </div>
-
-  <div>
-    <%= form.label :project_id, style: "display: block" %>
-    <%= form.select :project_id, Project.all.collect { |p| [p.name, p.id] }, prompt: "Select Project" %>
-  </div>
- <!-- Nested Voucher Entries -->
-<%= form_with(model: voucher) do |f| %>
-  <!-- voucher fields -->
-  <div>
-    <%= f.label :date %>
+    <%= f.label :date, style: "display: block" %>
     <%= f.date_field :date %>
   </div>
 
   <div>
-    <%= f.label :voucher_number %>
+    <%= f.label :voucher_number, style: "display: block" %>
     <%= f.text_field :voucher_number %>
   </div>
 
   <div>
-    <%= f.label :voucher_type %>
-    <%= f.text_field :voucher_type %>
+    <%= f.label :voucher_type, style: "display: block" %>
+    <%= f.text_field :voucher_type, placeholder: "Payment, Receipt, Journal, etc." %>
   </div>
 
   <div>
-    <%= f.label :description %>
+    <%= f.label :description, style: "display: block" %>
     <%= f.text_area :description %>
   </div>
 
-  <h3>Voucher Entries</h3>
-  <div data-controller="voucher-entries" data-voucher-entries-target="entries">
-  <div data-voucher-entries-target="entries">
-    <%= f.fields_for :voucher_entries do |ve| %>
-      <%= render "voucher_entry_fields", f: ve %>
-    <% end %>
+  <div>
+    <%= f.label :project_id, style: "display: block" %>
+    <%= f.select :project_id, Project.all.collect { |p| [p.name, p.id] }, prompt: "Select Project" %>
   </div>
-</div>
-  <!-- hidden template for JS cloning -->
-  <template data-voucher-entries-target="template">
-    <%= f.fields_for :voucher_entries, VoucherEntry.new, child_index: "NEW_RECORD" do |ve| %>
-      <%= render "voucher_entry_fields", f: ve %>
-    <% end %>
-  </template>
 
-  <%= link_to "Add Entry", "#", class: "add-entry", data: { action: "click->voucher-entries#add" } %>
+  <h3>Voucher Entries</h3>
 
-  <%= f.submit %>
+  <div data-controller="voucher-entries">
+    <div data-voucher-entries-target="entries">
+      <%= f.fields_for :voucher_entries do |ve| %>
+        <%= render "voucher_entry_fields", f: ve %>
+      <% end %>
+    </div>
+
+    <!-- Template for new entries -->
+    <template data-voucher-entries-target="template">
+      <%= f.fields_for :voucher_entries, VoucherEntry.new, child_index: "NEW_RECORD" do |ve| %>
+        <%= render "voucher_entry_fields", f: ve %>
+      <% end %>
+    </template>
+
+    <%= link_to "Add Entry", "#",
+          class: "add-entry",
+          data: { action: "click->voucher-entries#add" } %>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <%= f.submit "Save Voucher" %>
+  </div>
 <% end %>
 
-<% end %>
